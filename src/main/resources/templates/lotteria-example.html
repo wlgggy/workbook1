@@ -1,84 +1,126 @@
 <!DOCTYPE html>
+<!--데리버거 고쳐진 version
+    치키는 안고쳐진 version
+-->
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Lotteria</title>
-    <link rel="stylesheet" th:href="@{/styles/font.css}" />
-    <link rel="stylesheet" th:href="@{/styles/normalize.css}" />
-    <link rel="stylesheet" th:href="@{/styles/lotteria.css}" />
+    <link rel="stylesheet" th:href="@{/styles/font.css}"/>
+    <link rel="stylesheet" th:href="@{/styles/normalize.css}"/>
+    <link rel="stylesheet" th:href="@{/styles/lotteria.css}"/>
 </head>
 <body>
-    <header class="title-box wrap-box">
-        <h3 class="inner-box">롯데리아</h3>
-    </header>
-    <article class="wrap-box">
-        <section class="inner-box tab-box">
-            <label aria-label="추천메뉴 탭" role="tab">
-                <span>추천메뉴</span>
-                <input checked="checked" hidden="hidden" name="tab-content" type="radio" />
-            </label>
-            <label aria-label="전체메뉴 탭" role="tab">
-                <span>전체메뉴</span>
-                <input hidden="hidden" name="tab-content" type="radio" />
-            </label>
-            <label>
-                <span>이름</span>
-                <input id="search-hamburger" class="search-field" type="text">
-            </label>
-        </section>
-        <section class="inner-box list-box">
-            <div class="hamburger-box">
-                <img id="hamburger-image" class="hamburger-image" />
-                <p id="hamburger-name" class="hamburger-data hamburger-name"></p>
-                <p id="hamburger-price" class="hamburger-data hamburger-price"></p>
-            </div>
-        </section>
-    </article>
-    <script>
-        (function(){
-            window.addEventListener('DOMContentLoaded'), async function(){
-                try{
-                    const hamburgers = (await fetch('lotteria-menus')).json();
-                    const hamburgerList = document.getElementById('hamburger-list');
-                    const hamburgerTemplate = document.getElementById('hamburger-template');
+<header class="title-box wrap-box">
+    <h3 class="inner-box">롯데리아</h3>
+</header>
+<article class="wrap-box">
+    <section class="inner-box tab-box">
+        <label aria-label="추천메뉴 탭" role="tab">
+            <span>추천메뉴</span>
+            <input checked="checked" hidden="hidden" name="tab-content" type="radio"/>
+        </label>
+        <label aria-label="전체메뉴 탭" role="tab">
+            <span>전체메뉴</span>
+            <input hidden="hidden" name="tab-content" type="radio"/>
+        </label>
+        <label>
+            <span>이름</span>
+            <input id="search-input" class="search-field" type="text">
+        </label>
+    </section>
+    <section id="hamburger-list" class="inner-box list-box"></section>
+</article>
+<template id="hamburger-template">
+    <div class="hamburger-box">
+        <img id="hamburger-image" alt="#" class="hamburger-image" />
+        <p id="hamburger-name" class="hamburger-data hamburger-name"></p>
+        <p id="hamburger-price" class="hamburger-data hamburger-price"></p>
+    </div>
+</template>
+<script>
+    // document.addEventListener("DOMContentLoaded", async () => {
+    //
+    //     const searchInput = document.getElementById('search-input')
+    //
+    //     const list_box = document.querySelector(".list-box")
+    //     const Hamburgers = await fetch("/lotteria-menus").then(res => res.json())
+    //     console.log(Hamburgers)
+    //     Hamburgers.forEach(el => {
+    //         const Box = document.createElement("div")
+    //         const Image = document.createElement("img")
+    //         const Name = document.createElement("p")
+    //         const Price = document.createElement("p")
+    //
+    //         Image.setAttribute("id", "hamburger-image")
+    //         Name.setAttribute("id", "hamburger-name")
+    //         Price.setAttribute("id", "hamburger-price")
+    //
+    //         Box.classList.add("hamburger-box")
+    //         Image.classList.add("hamburger-image")
+    //         Name.classList.add("hamburger-name", "hamburger-data")
+    //         Price.classList.add("hamburger-price", "hamburger-data")
+    //
+    //         Name.textContent = `${el.name}`
+    //         Price.textContent = `${el.price}`
+    //
+    //         Image.src = `${el.imagePath}`
+    //         Image.alt = `${el.name}`
+    //
+    //         Box.appendChild(Image)
+    //         Box.appendChild(Name)
+    //         Box.appendChild(Price)
+    //
+    //         list_box.appendChild(Box)
+    //
+    //     })
+    //
+    // })
 
-                    for (const hamburger of hamburgers) {
-                        const hamburgerTemplateClone = hamburgerTemplate.content.cloneNode(ture);
+    (function() {
+        window.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search-input');
+            // const hamburgers = (await (await fetch('lotteria-menus')).json())
+            const hamburgerSection = document.getElementById('hamburger-list');
+            const hamburgerTemplate = document.getElementById('hamburger-template');
+            //
+            // for (const hamburger of hamburgers) {
+            //     const hamburgerTemplateClone = hamburgerTemplate.content.cloneNode(true)
+            //     const hamburgerImage = hamburgerTemplateClone.getElementById('hamburger-image')
+            //     const hamburgerName = hamburgerTemplateClone.getElementById('hamburger-name')
+            //     const hamburgerPrice = hamburgerTemplateClone.getElementById('hamburger-price')
+            //
+            //     hamburgerImage.setAttribute('alt', hamburger.name)
+            //     hamburgerImage.setAttribute('src', hamburger.imagePath)
+            //     hamburgerName.textContent = hamburger.name
+            //     hamburgerPrice.textContent = hamburger.price
+            //     hamburgerSection.appendChild(hamburgerTemplateClone)
+            // }
 
-                        const hamburgerImage = hamburgerTemplateClone.querySelector('.hamburger-image');
-                        const hamburgerName = hamburgerTemplateClone.querySelector('.hamburger-name');
-                        const hamburgerPrice = hamburgerTemplateClone.querySelector('.hamburger-price');
+            searchInput.addEventListener('input', async ($event) => {
 
-                        hamburgerImage.src = hamburger.imagePath;
-                        hamburgerName.textContent = hamburger.name;
-                        hamburgerPrice.textContent = `${hamburger.price}원`;
+                const encodedValue = window.encodeURIComponent($event.target.value ?? '');
+                const hamburgers = await fetch(`lotteria-menus?hamburgerName=${encodedValue}`)
+                    .then(response => response.json());
 
-                        hamburgerList.appendChild(hamburgerTemplateClone);
-                    }
-                }catch (error){
-                    console.error(error);
+                hamburgerSection.innerHTML = "";
+                for (const hamburger of hamburgers) {
+                    const hamburgerTemplateClone = hamburgerTemplate.content.cloneNode(true);
+                    const hamburgerImage = hamburgerTemplateClone.getElementById('hamburger-image');
+                    const hamburgerName = hamburgerTemplateClone.getElementById('hamburger-name');
+                    const hamburgerPrice = hamburgerTemplateClone.getElementById('hamburger-price');
+
+                    hamburgerImage.setAttribute('alt', hamburger.name);
+                    hamburgerImage.setAttribute('src', hamburger.imagePath);
+                    hamburgerName.textContent = hamburger.name;
+                    hamburgerPrice.textContent = hamburger.price;
+                    hamburgerSection.appendChild(hamburgerTemplateClone);
                 }
-            }
-        })
-        // (function(){
-        //     window.addEventListener('DOMContentLoaded', async function(){
-        //         // 1번
-        //         const hamburgers = (await (await fetch('lotteria-menus')).json());
-        //         const hamburgerList = document.getElementById('hamburger-list');
-        //         const hamburgerTemplate = document.getElementById('hamburger-template');
-        //
-        //         for (const hamburger of hamburgers) {
-        //             const hamburgerTemplateClone = hamburgerTemplate.content.cloneNode(ture);
-        //             const hamburgerTmage = hamburgerTemplateClone.getElementById('hamburger')
-        //             const haburgerText = hamburgers.getElementById('ham')
-        //         }
-        //
-        //         // 2번
-        //         // const hamburgers = await fetch('lotteria-menus').then(data => data.json());
-        //         console.log(hamburgers)
-        //     });
-        //
-        // })();
-    </script>
+
+                console.log(hamburgerSection.childNodes, hamburgerSection.childElementCount);
+            });
+        });
+    })();
+</script>
 </body>
 </html>
