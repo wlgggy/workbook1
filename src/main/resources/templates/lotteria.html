@@ -25,9 +25,9 @@
         <section class="inner-box list-box">
             <!-- 이곳에 롯데리아 햄버거 메뉴를 출력(lotteria-example.html 참고) -->
             <div th:each="hamburgers:${hamburgers}" class="hamburger-box">
-                <img th:src="${hamburgers.getImagePath()}" class="hamburger-image" alt="">
+                <img th:src="${hamburgers.getImagePath()}" class="hamburger-image" alt="햄버거.이름">
                 <p th:text="${hamburgers.getName()}" class="hamburger-data hamburger-name"></p>
-                <p th:text="${hamburgers.getPrice()}  + '000,000' + '원'" class="hamburger-data hamburger-price"></p>
+                <p th:text="${hamburgers.getPrice()} + '원'" class="hamburger-data hamburger-price"></p>
             </div>
         </section>
     </article>
