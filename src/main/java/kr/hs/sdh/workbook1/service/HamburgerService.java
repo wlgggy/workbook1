@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public final class HamburgerService {
@@ -26,6 +27,12 @@ public final class HamburgerService {
                 Comparator.comparing(Hamburger::getPrice)
             )
             .toList();
+    }
+
+    // saveHamburgerRespository의 savaHamburger 메소드를 호출해서 저장하는 메소드
+
+    public void setHamburger(Hamburger hamburger) {
+         this.hamburgerRepository.saveHamburger(hamburger);
     }
 
 }

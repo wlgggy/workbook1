@@ -11,5 +11,5 @@ public interface HamburgerRepository {
 
     void deleteHamburger(Hamburger hamburger);
 
-    void saveHamburger(Hamburger hamburger);
+    Hamburger saveHamburger(Hamburger hamburger);
 }

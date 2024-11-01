@@ -32,8 +32,19 @@ body {
 
 .tab-box {
     margin: 1.25rem 0;
-
     > label {
+        padding: 7px 12px;
+        color: #666666;
+        font-size: 0.8em;
+        border-radius: 4px;
+        background-color: #dde0e366;
+        cursor: pointer;
+
+        + label {
+            margin-left: 10px;
+        }
+    }
+    > label.menu {
         padding: 7px 12px;
         color: #666666;
         font-size: 0.8em;
@@ -82,4 +93,51 @@ body {
         font-size: 0.95em;
         font-weight: 600;
     }
+}
+#background{
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.3);
+    z-index: 99;
+}
+#popUp {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 50px;
+    background-color: white;
+    z-index: 100;
+}
+#popUp > form{
+    display: flex;
+    flex-direction: column;
+}
+#popUp > form > label {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+#popUp > form > label > input{
+    border: none;
+}
+#close{
+    position: absolute;
+    right: -10px;
+    top: -20px;
+    /*border: 1px solid red ;*/
+    border-radius: 100px;
+    width: 30px;
+    aspect-ratio: 1/1;
+    display: grid;
+    place-items: center;
+    background-color: red;
+    color: white;
 }

@@ -16,17 +16,21 @@
 </header>
 <article class="wrap-box">
     <section class="inner-box tab-box">
-        <label aria-label="추천메뉴 탭" role="tab">
+        <label class="menu" aria-label="추천메뉴 탭" role="tab">
             <span>추천메뉴</span>
             <input checked="checked" hidden="hidden" name="tab-content" type="radio"/>
         </label>
-        <label aria-label="전체메뉴 탭" role="tab">
+        <label class="menu" aria-label="전체메뉴 탭" role="tab">
             <span>전체메뉴</span>
             <input hidden="hidden" name="tab-content" type="radio"/>
         </label>
         <label>
+            <span>버거추가</span>
+            <input id="pop-btn" type="radio" hidden="hidden">
+        </label>
+        <label>
             <span>이름</span>
-            <input id="search-input" class="search-field" type="text">
+            <input id="search-input" class="search-field" type="text" >
         </label>
     </section>
     <section id="hamburger-list" class="inner-box list-box"></section>
@@ -38,6 +42,35 @@
         <p id="hamburger-price" class="hamburger-data hamburger-price"></p>
     </div>
 </template>
+<button id="test-button" onclick="window.alert('버튼 클릭')">나만의 버튼</button>
+<div id="background"></div>
+<div id="popUp">
+    <h3>햄버거 추가 ᖭི(ˊᗜˋ*)ᖫྀ</h3>
+    <form class="hamburger-add-form" method="post" action="lotteria-add-menu">
+        <label>
+            <span>☆ 햄버거 이름 ☆</span>
+            <input type="text" name="name" placeholder="햄버거 이름"/>
+        </label>
+        <label>
+            <span>☆ 햄버거 가격 ☆</span>
+            <input type="number" name="price" placeholder="햄버거 가격"/>
+        </label>
+        <label>
+            <span>☆ 햄버거 이미지 경로 ☆</span>
+            <input type="text" name="imagePath" placeholder="햄버거 이미지 경로"/>
+        </label>
+        <label>
+            <span>☆ 신제품 여부 ☆</span>
+            <input type="checkbox" name="isNew" placeholder="신제품 여부"/>
+        </label>
+        <label>
+            <span>☆ 추천 여부 ☆</span>
+            <input type="checkbox" name="isRecommended" placeholder="추천 여부"/>
+        </label>
+        <input type="submit" value="저장"/>
+    </form>
+    <p id="close">X</p>
+</div>
 <script>
     // document.addEventListener("DOMContentLoaded", async () => {
     //
@@ -79,6 +112,31 @@
 
     (function() {
         window.addEventListener('DOMContentLoaded', function() {
+
+            const button = document.getElementById('test-button');
+            const clickEvent = new Event('click');
+
+            button.dispatchEvent(clickEvent)
+
+            const popBtn = document.querySelector('#pop-btn')
+            const close = document.querySelector('#close')
+            const background = document.querySelector('#background')
+
+            popBtn.addEventListener('click', function(){
+                popUp.style.display = 'block';
+                background.style.display = 'block';
+            })
+            background.addEventListener('click', function (){
+                popUp.style.display = 'none'
+                background.style.display = 'none';
+            })
+
+            close.addEventListener('click', function (){
+                popUp.style.display = 'none'
+                background.style.display = 'none';
+            })
+
+
             const searchInput = document.getElementById('search-input');
             // const hamburgers = (await (await fetch('lotteria-menus')).json())
             const hamburgerSection = document.getElementById('hamburger-list');
@@ -99,8 +157,9 @@
 
             searchInput.addEventListener('input', async ($event) => {
 
+                // const hamburgerName = window.encodeURIComponent(searchInput.value?.trim() ?? )
                 const encodedValue = window.encodeURIComponent($event.target.value ?? '');
-                const hamburgers = await fetch(`lotteria-menus?hamburgerName=${encodedValue}`)
+                const hamburgers = await fetch(`lotteria-menus?hamburgerName=${encodedValue}`) // 쿼리스트링
                     .then(response => response.json());
 
                 hamburgerSection.innerHTML = "";

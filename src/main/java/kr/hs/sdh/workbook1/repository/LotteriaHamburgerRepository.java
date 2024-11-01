@@ -46,7 +46,7 @@ public final class LotteriaHamburgerRepository implements HamburgerRepository, I
     }
 
     @Override
-    public void saveHamburger(Hamburger hamburger) {
+    public Hamburger saveHamburger(Hamburger hamburger) {
 //        if (hamburgers.contains(hamburger)){
 //            hamburgers.set(hamburgers.indexOf(hamburger), hamburger);
 //        }else {
@@ -59,6 +59,7 @@ public final class LotteriaHamburgerRepository implements HamburgerRepository, I
         }
         this.hamburgers.add(hamburger);
 
+        return hamburger;
     }
 
 }

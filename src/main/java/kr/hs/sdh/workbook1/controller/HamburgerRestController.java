@@ -3,9 +3,7 @@ package kr.hs.sdh.workbook1.controller;
 
 import kr.hs.sdh.workbook1.entity.Hamburger;
 import kr.hs.sdh.workbook1.service.HamburgerService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,5 +30,10 @@ public class HamburgerRestController {
         }
 
         return filterHamburgers;
+    }
+
+    @PostMapping("/lotteria-add-menu")
+    private void lotteriaAddMenu(Hamburger hamburger) {
+
     }
 }
