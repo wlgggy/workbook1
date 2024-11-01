@@ -13,7 +13,7 @@ public final class Hamburger {
     private final int price;
 
     // 햄버거 이미지 경로
-    private final String imagePath;
+    private String imagePath;
 
     // 신제품 여부
     private final boolean isNew;
@@ -66,6 +66,10 @@ public final class Hamburger {
     // 추천 여부를 반환하는 메소드
     public boolean isRecommended() {
         return this.isRecommended;
+    }
+
+    public void setImagePath(final String imagePath) {
+        this.imagePath = imagePath;
     }
 
     @Override

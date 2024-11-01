@@ -46,7 +46,7 @@
 <div id="background"></div>
 <div id="popUp">
     <h3>햄버거 추가 ᖭི(ˊᗜˋ*)ᖫྀ</h3>
-    <form class="hamburger-add-form" method="post" action="lotteria-add-menu">
+    <form class="hamburger-add-form" method="post" action="lotteria-add-menu" enctype="multipart/form-data">
         <label>
             <span>☆ 햄버거 이름 ☆</span>
             <input type="text" name="name" placeholder="햄버거 이름"/>
@@ -56,8 +56,8 @@
             <input type="number" name="price" placeholder="햄버거 가격"/>
         </label>
         <label>
-            <span>☆ 햄버거 이미지 경로 ☆</span>
-            <input type="text" name="imagePath" placeholder="햄버거 이미지 경로"/>
+            <span>☆ 이미지 경로 ☆</span>
+            <input type="file" name="image" placeholder="햄버거 이미지" accept="image/*"/>
         </label>
         <label>
             <span>☆ 신제품 여부 ☆</span>

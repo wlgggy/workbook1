@@ -3,13 +3,18 @@ package kr.hs.sdh.workbook1.service;
 import kr.hs.sdh.workbook1.entity.Hamburger;
 import kr.hs.sdh.workbook1.repository.HamburgerRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
 @Service
 public final class HamburgerService {
+
+    private static final String ABSOLUTE_PATH = "/Users/wlgggy/IntelliJ-workspace/spring/workbook1/src/main/resources/static/images/";
 
     // 햄버거 데이터 저장소
     private final HamburgerRepository hamburgerRepository;
@@ -31,8 +36,23 @@ public final class HamburgerService {
 
     // saveHamburgerRespository의 savaHamburger 메소드를 호출해서 저장하는 메소드
 
-    public void setHamburger(Hamburger hamburger) {
-         this.hamburgerRepository.saveHamburger(hamburger);
+    public void setHamburger(final Hamburger hamburger, final MultipartFile multipartFile) {
+        final String fileName = multipartFile.getOriginalFilename();
+
+        if (fileName != null && !fileName.isEmpty()) {
+            try {
+                final File file = new File(ABSOLUTE_PATH + fileName);
+
+                multipartFile.transferTo(file);
+                hamburger.setImagePath("/images/" + fileName);
+                this.hamburgerRepository.saveHamburger(hamburger);
+            }
+            catch (final IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
     }
 
 }

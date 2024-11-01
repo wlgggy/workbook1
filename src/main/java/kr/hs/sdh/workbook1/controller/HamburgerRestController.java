@@ -1,10 +1,15 @@
 package kr.hs.sdh.workbook1.controller;
 
 
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletResponse;
 import kr.hs.sdh.workbook1.entity.Hamburger;
 import kr.hs.sdh.workbook1.service.HamburgerService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +38,12 @@ public class HamburgerRestController {
     }
 
     @PostMapping("/lotteria-add-menu")
-    private void lotteriaAddMenu(Hamburger hamburger) {
-
+    private void lotteriaAddMenu(
+            Hamburger hamburger,
+            @RequestParam(value = "image") MultipartFile multipartFile,
+            HttpServletResponse httpServletResponse
+    ) throws IOException {
+        this.hamburgerService.setHamburger(hamburger, multipartFile);
+        httpServletResponse.sendRedirect("lotteria-example");
     }
 }
